@@ -2,6 +2,7 @@ import streamlit as st
 import ollama
 import config
 
+
 #function to load the css styling
 def load_css(file_path):
     with open(file_path) as f:
@@ -16,9 +17,9 @@ st.title("Hi, I'm Bob!")
 
 st.sidebar.title("BOB A.I.")
 with st.sidebar:
-    st.markdown("What does this do?")
-    st.button("+ New Chat")
+    st.button("+New Chat", key="new_chat_button") #button to start a new chat
     file = st.file_uploader("Pick a file") #allows user to upload a file ..... this doesn't work yet, you can submit a file, but nothing happens
+    st.button("-Clear Chat History", key="clear_chat_button") #button to clear chat history
 
 
 #initializes the messages with the system prompt
