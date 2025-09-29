@@ -27,27 +27,11 @@
         font-size: 40px; 
     }
 
-
+/*Clear Button Bottom Positioning */
 .st-key-clear_chat_button button{
-    background: #5A739C;
-    color: #FFFDFE;
-    border-radius: 8px;
-    border: 2px solid #E7EFFF;
-    padding: none;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    width: 200px;
     position: fixed;
     bottom: 1%;    
 }
-
-.st-key-clear_chat_button button :hover{
-    background: #5A739C;
-    border: 4px solid #E7EFFF;
-    
-}
-
 
 
 /*Button Styling*/
@@ -71,4 +55,13 @@ div.stButton > button:hover{
 
 /*|||||||||||||||||||||||||||||||||Sidebar Styling Section End|||||||||||||||||||||||||||||||||*/
 
+[data-testid="stChatInput"]{
+    border-radius: 30px;
+    border: 2px solid #E7EFFF;
+    width: 800px;
+}
+
+[data-testid="stChatMessage"]{
+    background-color: red;
+}
 
