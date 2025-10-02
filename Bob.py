@@ -59,7 +59,7 @@ def generate_response():
         yield token #display the token
 
 
-if prompt:= st.chat_input("Type here"): #this text will show up in the input bar
+if prompt:= st.chat_input("Type here", key="chat_input_styled"): #this text will show up in the input bar
     st.session_state.messages.append({"role": "user", "content": prompt}) #if the user types a prompt append it
     with unique_message("user"):
         with st.chat_message("user", avatar="Assets/User_Icon.png"):

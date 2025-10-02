@@ -1,3 +1,8 @@
+  :root {
+      --primary-color: #30B3AF; /* Example primary color (teal) */
+      --secondary-color: #B3DCD8; /* Example secondary color */
+      /* You can define other colors here as well */
+    }
 
 /*Colors the header*/
 [data-testid="stHeader"] {
@@ -14,27 +19,19 @@
     background-color: #1F1F24;
 }
 
-
 /*|||||||||||||||||||||||||||||||||Sidebar Styling Section|||||||||||||||||||||||||||||||||*/
 /*Colors the sidebar*/
 [data-testid="stSidebar"]{
     background-color: #294A7B;
-    width: 600px;
+    width: 20% !important;
 }
 
 /*Styling the header for the sidebar*/
 [data-testid="stSidebar"] h1 {
-        font-size: 40px; 
-    }
-
-/*Clear Button Bottom Positioning */
-.st-key-clear_chat_button button{
-    position: fixed;
-    bottom: 1%;    
+    font-size: 40px; 
 }
 
-
-/*Button Styling*/
+    /*Button Styling*/
 div.stButton > button{
     background: #5A739C;
     color: #FFFDFE;
@@ -44,41 +41,47 @@ div.stButton > button{
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
-    width: 200px;
+    width: 300px;
+    margin: 0 auto;
+    align-items: center;
 }
 
 div.stButton > button:hover{
     background: #5A739C;
     border: 4px solid #E7EFFF;
+}
 
+/*Clear Button Bottom Positioning */
+.st-key-clear_chat_button button{
+    position: fixed;
+    bottom: 1%;
+}
+
+.stFileUploader{
+    position: fixed;
+    bottom: 1%;
+    width: 300px;
+    padding-bottom: 3%;
+    margin: 0 auto;
+    align-items: center;
 }
 
 /*|||||||||||||||||||||||||||||||||Sidebar Styling Section End|||||||||||||||||||||||||||||||||*/
 
-/*
-[data-testid="stChatInput"]{
+
+.st-key-chat_input_styled {
     border-radius: 30px;
     border: 2px solid #E7EFFF;
     width: 800px;
     justify-self: flex-center;
     margin-right: auto;
     margin-left: auto;  
-    outline: none;  
-}
-*/
-
-div.stChatInput{
-    border-radius: 30px;
-    border: 2px solid #E7EFFF;
-    width: 800px;
-    justify-self: flex-center;
-    margin-right: auto;
-    margin-left: auto;  
-    outline: none;  
+    outline: none !important;  
+    box-shadow: none;
 }
 
-div.stChatInput input:focus{
-    outline: none;  
+.st-key-chat_input_styled:focus{
+    
 
 }
 
