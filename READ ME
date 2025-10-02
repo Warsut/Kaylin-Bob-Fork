@@ -28,7 +28,16 @@ Run ollama serve in other terminal to make sure ollama is running.
 
 To run: in terminal do: streamlit run Bob.py
 
+
+....Styling within config.toml.....
+in terminal: streamlit config show
+Then you can navigate to the streamlit config.toml file and open it. 
+Make edits within there (be very careful)
+
+
 -------------------------------
 ....IMPORTANT....
 In order to run at all (for streamlit run Bob.py) you MUST be in the venv. To do that make sure you activate venv [text above for windows or mac]
 Don't forget to do ollama serve in normal terminal as well.
+
+

@@ -1,26 +1,5 @@
-  :root {
-      --primary-color: #30B3AF; /* Example primary color (teal) */
-      --secondary-color: #B3DCD8; /* Example secondary color */
-      /* You can define other colors here as well */
-    }
-
-/*Colors the header*/
-[data-testid="stHeader"] {
-    background-color: #1F1F24;
-}
-
-/*Colors the main bg*/
-[data-testid="stAppViewContainer"] {
-    background-color: #1F1F24;
-}
-
-/* [data-testid="stFooter"] did not work for this for some reason . . ., element was found through inspect element when running*/
-.st-emotion-cache-hzygls {
-    background-color: #1F1F24;
-}
-
 /*|||||||||||||||||||||||||||||||||Sidebar Styling Section|||||||||||||||||||||||||||||||||*/
-/*Colors the sidebar*/
+/*Colors and adjusts the sidebar*/
 [data-testid="stSidebar"]{
     background-color: #294A7B;
     width: 20% !important;
@@ -31,7 +10,7 @@
     font-size: 40px; 
 }
 
-    /*Button Styling*/
+/*Button Styling*/
 div.stButton > button{
     background: #5A739C;
     color: #FFFDFE;
@@ -52,18 +31,26 @@ div.stButton > button:hover{
 }
 
 /*Clear Button Bottom Positioning */
+/*
 .st-key-clear_chat_button button{
     position: fixed;
     bottom: 1%;
 }
+*/
+
+/*fdajfdsahvfasdhjfkadsnfbjlhdsbfgdsagsfdg*/
+.st-key-clear_chat_button button{
+    position:absolute;
+    top: 70vh;
+    width:100%;
+}
+/*fdajfdsahvfasdhjfkadsnfbjlhdsbfgdsagsfdg*/
+
 
 .stFileUploader{
-    position: fixed;
-    bottom: 1%;
-    width: 300px;
-    padding-bottom: 3%;
-    margin: 0 auto;
-    align-items: center;
+    position:absolute;
+    top: 54vh;
+    width:100%;
 }
 
 /*|||||||||||||||||||||||||||||||||Sidebar Styling Section End|||||||||||||||||||||||||||||||||*/
@@ -76,23 +63,16 @@ div.stButton > button:hover{
     justify-self: flex-center;
     margin-right: auto;
     margin-left: auto;  
-    outline: none !important;  
-    box-shadow: none;
 }
 
-.st-key-chat_input_styled:focus{
-    
-
-}
-
-
+/*Default message styling (Bob's styling for the most part)*/
 .stChatMessage{
     background-color: #1F1F24;
     max-width: 70%;
 }
 
+/*Message styling when from the user*/
 [class*="st-key-user"]{
-
     .stChatMessage{
         background-color: #294A7B;
         border-radius: 15px;
