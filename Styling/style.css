@@ -21,7 +21,6 @@ div.stButton > button{
     font-weight: bold;
     cursor: pointer;
     width: 310px;
-    margin: 0 auto;
 }
 
 div.stButton > button:hover{
@@ -32,14 +31,14 @@ div.stButton > button:hover{
 
 .st-key-clear_chat_button button{
     position:absolute;
-    top: 70vh;
+    bottom: -70vb;
     width:100%;
 }
 
 
 .stFileUploader{
     position:absolute;
-    top: 54vh;
+    bottom: -65vb;
     width:100%;
 }
 
