@@ -60,7 +60,18 @@ with st.sidebar:
     #make a select box to view the previous chats
     chatHistorySelectBox = st.selectbox("View Chat History", st.session_state.chat_history)
 
-    file = st.file_uploader("Pick a file") #allows user to upload a file ..... this doesn't work yet, you can submit a file, but nothing happens
+    files_uploaded = st.file_uploader("Pick a file") #allows user to upload a file ..... this doesn't work yet, you can submit a file, but nothing happens
+
+    if files_uploaded is not None: #if there are files that have been uploaded
+        #for file in files_uploaded: #for each file uploaded
+        file_contents = files_uploaded.read().decode("utf-8") #read and decode the file (put that in file data)
+        st.session_state.messages.append({'role': 'system', 'content': f"A file has been uploaded named: {files_uploaded.name} The contents of the file is: {file_contents}"}) #tell the assistant what the file is, but do not print this out
+        
+        #TEST
+        print(f"File uploaded successfully. File name: {files_uploaded.name} \n File Contents: {file_contents}") #THIS IS A TEST STATEMENT, DELETE LATER
+        #TEST
+
+
     st.button("-Clear Chat History", key="clear_chat_button", on_click=clear_chat_history) #button to clear chat history
 
 
