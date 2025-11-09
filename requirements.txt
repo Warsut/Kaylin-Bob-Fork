@@ -1,0 +1,4 @@
+#requirements needed to be installed
+streamlit
+ollama
+pypdf
