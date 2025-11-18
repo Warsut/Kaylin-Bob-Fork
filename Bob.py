@@ -204,7 +204,7 @@ if __name__ == "__main__":
                     }
                 )
 
-            elif files_uploaded.type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.docuent':
+            elif files_uploaded.type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
                 from docx import Document #required pip install python-docx
 
                 document = Document(files_uploaded)
