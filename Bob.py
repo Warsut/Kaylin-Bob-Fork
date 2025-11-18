@@ -221,16 +221,6 @@ if __name__ == "__main__":
                     }
                 )
 
-            elif files_uploaded.type.startswith('image/'):
-                image_bytes = files_uploaded.getvalue()
-                st.session_state['uploaded_image_bytes'] = image_bytes
-                st.session_state.messages.append(
-                    {
-                        'role': 'system',
-                        'content': f"An image named {files_uploaded.name} has been uploaded. Analyze the image to answer the next question."
-                    }
-                )
-
             else:
                 print("There's an issue with finding the file type dawg")
                 st.session_state.messages.append(
@@ -247,21 +237,11 @@ if __name__ == "__main__":
     def generate_response():
         #only pass non-system messages (or the last few if context is long) 
         #for simplicity, we pass all messages including the hidden system prompt for now
-        messages_to_send = st.session_state.messages
         
         #create keyword arguments for the ollama.chat call
-        kwargs = {
-            'model': MODEL,
-            'stream': True,
-            'messages': messages_to_send
-        }
-        
-        if 'uploaded_image_bytes' in st.session_state:
-            kwargs['images'] = [st.session_state['uploaded_image_bytes']]
-            del st.session_state['uploaded_image_bytes']
-
-        #response = ollama.chat(model=MODEL, stream=True, messages=st.session_state.messages) #will get the response from the model
-        response = ollama.chat(**kwargs)
+        response = ollama.chat(model=MODEL, 
+                               stream=True, 
+                               messages=st.session_state.messages) #will get the response from the model
 
         st.session_state["full_message"] = "" #reset full message before generation
         for chunk in response:
