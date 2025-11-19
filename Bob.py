@@ -229,3 +229,4 @@ if __name__ == "__main__":
             stream = generate_response()
             response = st.write_stream(stream) #write the stream response
             st.session_state.messages.append({'role': 'assistant', 'content': response}) #append assitant response into content
+            
