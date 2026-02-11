@@ -4,3 +4,4 @@ ollama
 pypdf
 pandas
 python-docx
+docling

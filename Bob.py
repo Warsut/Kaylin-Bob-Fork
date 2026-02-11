@@ -13,7 +13,13 @@ from pypdf import PdfReader #in venv --> pip install pypdf
 import pandas as pd #in venv --> pip install pandas, pip install tabulate
 from docx import Document #in venv --> pip install python-docx
 
-#this comment is being added for test purposes
+#testing from docling
+from docling.document_converter import DocumentConverter
+
+source = "https://arxiv.org/pdf/2408.09869"
+converter = DocumentConverter()
+doc = converter.convert(source).document
+print(doc.export_to_markdown())
 
 #also note, for installations you should also be able to do pip install -r requirements.txt (all of the requirements should be in there)
 #test
