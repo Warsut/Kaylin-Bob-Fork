@@ -173,76 +173,66 @@ if __name__ == "__main__":
 
         files_uploaded = st.file_uploader("Pick a file") #allows user to upload a file
 
-        if files_uploaded is not None: #if there is a file that have been uploaded
+        #if there are 1 or more files uploaded
+        if files_uploaded:
+            
+            if files_uploaded is not None:
+                save_folder = 'files_uploaded_to_Bob'  #define the folder to save uploaded files
+                if not os.path.exists(save_folder):
+                    os.makedirs(save_folder) #if the folder doesn't exist, make it
 
-            print(f"A file has been uploaded. Name: '{files_uploaded.name}', Type: '{files_uploaded.type}'") #this is a test to print to the console. delete later
+                #define the full path of the file and the folder
+                file_path = os.path.join(save_folder, files_uploaded.name)
 
-            if files_uploaded.type == 'text/plain': #if the file i sjust plain text
-                file_contents = files_uploaded.read().decode("utf-8") #read and decode the file (put that in file data)
-                st.session_state.messages.append(
+                #write the information of the file to the folder
+                with open(file_path, "wb") as f:
+                    f.write(files_uploaded.getbuffer())
+
+                st.success(f"Saved: {files_uploaded.name}")
+
+                #with the file now uploaded and saved, use docling to interpret it
+                source = file_path #where the file is coming from
+                converter = DocumentConverter() #converter
+                doc = converter.convert(source).document #convert the file into a docling document
+
+            st.session_state.messages.append(
                     {
                         'role': 'system',
                         'content': f"A file has been uploaded named: {files_uploaded.name} "
-                                   f"The contents of the file is: {file_contents}"
+                                   f"The contents of the file is: {doc.export_to_markdown()}"
                     }
+
+                    
                 ) #tell the assistant what the file is, but do not print this out
             
-            elif files_uploaded.type == 'application/pdf': #if the file is a pdf
-                file_contents = PdfReader(files_uploaded) #read and decode the file (put that in file data)
-                number_of_pages = len(file_contents.pages) #find the number of pages
-                #decode each page and print each page individually to the assistant
-                for i in range(number_of_pages): 
-                    page = file_contents.pages[i] 
-                    file_text = page.extract_text()
-                    #system message for LLM (append for each page)
-                    st.session_state.messages.append(
-                        {
-                            'role': 'system',
-                            'content': (
-                                f"A file has been uploaded named: {files_uploaded.name} \n"
-                                f"The contents of page {i+1} the file is: {file_text} \n"
-                                f"The file is {number_of_pages} pages long."
-                            )
-                        }
-                    ) #tell the assistant what the file is, but do not print this out
 
-            elif files_uploaded.type == 'text/csv': #if it's a csv file
-                df = pd.read_csv(files_uploaded)
-                file_contents = df.to_markdown(index = False)
 
-                #system message for LLM
-                st.session_state.messages.append(
-                    {
-                        'role' : 'system',
-                        'content' : f"A file has been uploaded named: {files_uploaded.name} \n"
-                                    f"The contents of the CSV  file are: \n {file_contents}"
-                    }
-                )
 
-            elif files_uploaded.type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document': #if it's a .docx file
 
-                document = Document(files_uploaded)
-                file_contents = ""
-                for paragraph in document.paragraphs:
-                    file_contents += paragraph.text + "\n"
 
-                #system message for LLM
-                st.session_state.messages.append(
-                    {
-                        'role': 'system',
-                        'content': f"A file has been uploaded named: {files_uploaded.name} \n"
-                                    f"The contents of the Word document are: \n{file_contents}"
-                    }
-                )
 
-            else:
-                print("There's an issue with finding the file type dawg")
-                st.session_state.messages.append(
-                    {
-                        'role': 'assistant',
-                        'content': "There's an issue trying to read this type of file. Please let devlopers know so that I can be improved to support this need."
-                    }
-                ) #tell the assistant what the file is, but do not print this out
+
+
+
+
+
+
+
+
+
+
+
+        #########
+        #file reading space
+        #########
+
+
+
+
+
+
+
+
 
         st.button("-Clear All Chats", key="clear_chat_button", on_click=clear_all_chats) #button to clear all chats
 
