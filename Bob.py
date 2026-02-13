@@ -171,40 +171,70 @@ if __name__ == "__main__":
                 st.session_state['CHAT_NAMES'][st.session_state.current_chat] = new_name
                 st.rerun()
 
-        files_uploaded = st.file_uploader("Pick a file") #allows user to upload a file
+
+    # --- File Uploading ---
+
+        files_uploaded = st.file_uploader("Pick a file", accept_multiple_files=True) #allows user to upload a file
 
         #if there are 1 or more files uploaded
-        if files_uploaded:
-            
-            if files_uploaded is not None:
+        while files_uploaded is not None and len(files_uploaded) > 0:
+            i = 0 #counter for files uploaded, used for naming and saving files
+            for files in files_uploaded:
                 save_folder = 'files_uploaded_to_Bob'  #define the folder to save uploaded files
                 if not os.path.exists(save_folder):
                     os.makedirs(save_folder) #if the folder doesn't exist, make it
 
                 #define the full path of the file and the folder
-                file_path = os.path.join(save_folder, files_uploaded.name)
+                file_path = os.path.join(save_folder, files_uploaded[i].name)
 
                 #write the information of the file to the folder
                 with open(file_path, "wb") as f:
-                    f.write(files_uploaded.getbuffer())
+                    f.write(files_uploaded[i].getbuffer())
 
-                st.success(f"Saved: {files_uploaded.name}")
+                st.write(f"Saved: {files_uploaded[i].name}")
+                
+
+
 
                 #with the file now uploaded and saved, use docling to interpret it
                 source = file_path #where the file is coming from
                 converter = DocumentConverter() #converter
                 doc = converter.convert(source).document #convert the file into a docling document
 
-            st.session_state.messages.append(
-                    {
-                        'role': 'system',
-                        'content': f"A file has been uploaded named: {files_uploaded.name} "
-                                   f"The contents of the file is: {doc.export_to_markdown()}"
-                    }
+                #define the full path of the file and the folder
+                docling_file_path = os.path.join(save_folder, "docling_" + files_uploaded[i].name)
 
-                    
-                ) #tell the assistant what the file is, but do not print this out
-            
+                #write the information of the file to the folder
+                with open(docling_file_path, "wb") as f:
+                    f.write((doc.export_to_markdown().encode('utf-8')))
+
+                st.write(f"Saved: {files_uploaded[i].name}")
+
+
+                #open the file path to read and tell Bob. --> might move this to a later area, so he only reads once..?
+                with open(docling_file_path, "r") as f:
+                    st.session_state.messages.append(
+                            {
+                                'role': 'system',
+                                'content': f"A file has been uploaded named: {f.name} "                                        
+                                            f"The contents of the file is: {f.read()}"
+                            }
+
+
+                    ) #tell the assistant what the file is, but do not print this out
+
+                if len(files_uploaded) > 1:
+                    files_uploaded[i]=files_uploaded[i+1]  #move to the next file in the list if there are multiple files uploaded
+                    len(files_uploaded) - 1 #decrease the length of the file uploader list by 1 since we have already uploaded one file
+                
+                else:
+                    files_uploaded = None #set the file uploader to None to reset it
+
+                print("File was uploaded btw: " + f.name) #print the name of the file that was uploaded to the terminal for testing purposes
+
+
+
+                #i += 1 #iterate the file counter for the next file if there are multiple files uploaded
 
 
 
