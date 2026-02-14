@@ -7,6 +7,7 @@ os.environ["STREAMLIT_GLOBAL_DEVELOPMENT_MODE"] = "false"
 import sys
 import config 
 import uuid 
+import requests
 import streamlit as st #in venv --> pip install streamlit
 import ollama #in venv --> pip install ollama
 from pypdf import PdfReader #in venv --> pip install pypdf
@@ -54,7 +55,23 @@ if __name__ == "__main__":
 
     MODEL = 'llava:7b' #this is the model we are using,  if you don't already have this on your computer in terminal do: ollama run llava:7b
 
+    def warmup_model(): #warmup function to start the model before the user inputs anything, this is to reduce the wait time for the first response
+        try:
+            requests.post(
+                "http://localhost:11434/api/chat",
+                json={"model": MODEL},
+                timeout=30
+            )
+        except:
+            pass
+
+
     # --- Session State Initialization---
+    if 'MODEL_WARMED_UP' not in st.session_state:
+        with st.spinner("Warming up Big Bob... This may take a moment."): #warmup message while the model is starting
+            warmup_model()
+        st.session_state['MODEL_WARMED_UP'] = True
+
 
     if 'CHATS' not in st.session_state:
         #CHATS is a list of chat histories (list of lists of dictionaries)
@@ -274,15 +291,16 @@ if __name__ == "__main__":
     
         response = ollama.chat(model=MODEL, stream=True, messages=st.session_state.messages) #will get the response from the model
 
+        keep_alive="24h", #keep him running!
+        options={
+            "num_predict": 256
+        }
+
         st.session_state["full_message"] = "" #reset full message before generation
         for chunk in response:
             token = chunk["message"]["content"] #token is getting the chunk content 
             st.session_state["full_message"] += token #adds to the full message so far
             yield token #display the token
-
-
-
-
 
     if prompt := st.chat_input("Type here", key="chat_input_styled"): #this text will show up in the input bar
         st.session_state.messages.append({"role": "user", "content": prompt}) #if the user types a prompt append it
